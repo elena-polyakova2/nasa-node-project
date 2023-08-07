@@ -5,7 +5,7 @@ const http = require('http');
 const app = require('./app');
 
 
-app.listen();
+// app.listen();
 
 /*
 - Set port different to the port that the front-end runs on;
@@ -13,7 +13,7 @@ app.listen();
 - Check first if there is a port specified in the environment, if it is not, go to the default 8000.
 */
 const PORT = process.env.PORT || 8000; 
-const server = http.createServer(PORT);
+const server = http.createServer(app);
 
 server.listen(PORT, () => {
   console.log(`Listening on port ${PORT} ...`);
