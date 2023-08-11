@@ -7,7 +7,7 @@ const morgan = require('morgan');
 
 //import
 const planetsRouter = require('./routes/planets/planets.router');
-const e = require('express');
+const launchesRouter = require('./routes/launches/launches.router');
 
 const app = express();
 
@@ -24,6 +24,8 @@ app.use(express.static(path.join(__dirname, '..', 'public'))); //get path to pub
 
 //api requests
 app.use(planetsRouter);
+app.use(launchesRouter);
+
 app.get('/', (req, res) => {
   //send index.html inresponse
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
