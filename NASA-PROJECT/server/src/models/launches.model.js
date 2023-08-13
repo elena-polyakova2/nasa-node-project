@@ -1,3 +1,5 @@
+//model works with data based on however that stored
+
 //launches collection
 const launches = new Map();
 
@@ -16,6 +18,11 @@ const launch = {
 //add launches by key, value
 launches.set(launch.flightNumber, launch);
 
+
+function getAllLaunches() {
+  return Array.from(getAllLaunches.values()); //return launches converted to an array
+};
+
 module.exports = {
-  launches,
+  getAllLaunches,
 }

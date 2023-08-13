@@ -3,12 +3,12 @@ const express = require('express');
 
 //import destructured function
 const {
-  getAllPlanets,
+  httpGetAllPlanets,
 } = require('./planets.controller');
 
 const planetsRouter = express.Router();
 
 //get request
-planetsRouter.get('/planets', getAllPlanets);
+planetsRouter.get('/planets', httpGetAllPlanets);
 
 module.exports = planetsRouter;
