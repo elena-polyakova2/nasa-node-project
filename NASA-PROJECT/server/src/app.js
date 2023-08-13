@@ -23,8 +23,8 @@ app.use(express.json());//check coming data for json content
 app.use(express.static(path.join(__dirname, '..', 'public'))); //get path to public files
 
 //api requests
-app.use(planetsRouter);
-app.use(launchesRouter);
+app.use('/planets', planetsRouter);
+app.use('/launches', launchesRouter);
 
 app.get('/*', (req, res) => {
   //send index.html inresponse
