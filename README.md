@@ -1,2 +1,2 @@
 # nasa-project
-Full stack application with React, Node.js, Express.js, MongoDB and Arwes UI framework, tested with Jest and Supertest.
+Full stack application with React, Node.js, Express.js, MongoDB and Arwes UI framework, tested with Jest and Supertest, improving performance with pm2.
