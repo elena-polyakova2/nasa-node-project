@@ -35,3 +35,6 @@ const launchesSchema = new mongoose.Schema({
     default: true,
   },
 });
+
+//create model to connect launchesSchema with the "launches" collection to create and read data
+module.exports = mongoose.model('Launch', launchesSchema);
