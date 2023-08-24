@@ -5,6 +5,8 @@ const path = require('path');
 //3rd party library
 const { parse } = require('csv-parse');
 
+const planets = require('./planets.mongo');
+
 const habitablePlanets = [];
 
 function isHabitablePlanet(planet) {
@@ -22,9 +24,16 @@ function loadPlanetsData() {
       comment: '#',
       columns: true,
     }))
-    .on('data', (data) => {
+    .on('data', async (data) => {
       if (isHabitablePlanet(data)) {
-        habitablePlanets.push(data);
+        //habitablePlanets.push(data);
+
+        //save found planets to the database, 
+        //insert + update = upsert (insert only when project doesn't exist in the database)
+        //TODO: Replace below create with upsert
+        // await planets.create({
+        //   keplerName: data.kepler_name,
+        // });
       }
     })
     .on('error', (err) => {
