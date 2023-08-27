@@ -1,6 +1,6 @@
 //model works with data based on however that stored
 
-// const launches = require('./launches.mongo');
+const launchesDatabase = require('./launches.mongo');
 
 //launches collection
 const launches = new Map();
@@ -20,21 +20,34 @@ const launch = {
 };
 
 //add launches by key, value
-launches.set(launch.flightNumber, launch);
+saveLaunch(launch);
 
 function existsLaunchWithId(launchId) {
   return launches.has(launchId);
 }
 
-function getAllLaunches() {
-  return Array.from(launches.values()); //return launches converted to an array
+async function getAllLaunches() {
+  return await launchesDatabase
+  .find({}, {
+    '_id': 0, '__v': 0,
+  }); //find all launches in mongo collection and display them excluding mongoose's id and version key
+};
+
+//save launch object in launches collection, update values if a launch already exists
+async function saveLaunch(launch) {
+  //update one at a time
+  await launchesDatabase.updateOne({
+    flightNumber: launch.flightNumber, //check if flightNumber already exists, if not, create it, overwise insert launch object
+  }, launch, { //if launch does not exist, insert launch object
+    upsert: true,
+  })
 };
 
 //set launches in thelaunches map
 function addNewLaunch(launch) {
   latestFlightNumber++;
   
-  launches.set(
+  launchesDatabase.set(
     latestFlightNumber, //assign additional property to the launch object
     Object.assign(launch, {
       success: true,
@@ -57,4 +70,5 @@ module.exports = {
   getAllLaunches,
   addNewLaunch,
   abortLaunchById,
+  saveLaunch,
 }
