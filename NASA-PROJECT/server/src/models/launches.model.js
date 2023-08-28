@@ -1,6 +1,7 @@
 //model works with data based on however that stored
 
 const launchesDatabase = require('./launches.mongo');
+const planets = require('./planets.mongo');
 
 //launches collection
 const launches = new Map();
@@ -35,6 +36,16 @@ async function getAllLaunches() {
 
 //save launch object in launches collection, update values if a launch already exists
 async function saveLaunch(launch) {
+  //make sure target planet exists in the database
+  const planet = await planets.findOne({
+    keplerName: launch.target,
+  });
+
+  if(!planet) {
+    //built-in Nodejs Error object
+    throw new Error('No matching planet was found.');
+  };
+
   //update one at a time
   await launchesDatabase.updateOne({
     flightNumber: launch.flightNumber, //check if flightNumber already exists, if not, create it, overwise insert launch object
