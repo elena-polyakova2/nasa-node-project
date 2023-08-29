@@ -6,8 +6,6 @@ const planets = require('./planets.mongo');
 //launches collection
 const launches = new Map();
 
-let latestFlightNumber = 100;
-
 //store launch in object
 const launch = {
   flightNumber: 100,
@@ -27,12 +25,19 @@ function existsLaunchWithId(launchId) {
   return launches.has(launchId);
 }
 
+//
+async function getLatestFlightNumber() {
+  const latestLaunch = await launchesDatabase
+    .findOne() //return one first document, if more than one found
+    .sort('-flightNumber'); //sort data by flight number in descending order
+}
+
 async function getAllLaunches() {
   return await launchesDatabase
   .find({}, {
     '_id': 0, '__v': 0,
   }); //find all launches in mongo collection and display them excluding mongoose's id and version key
-};
+}
 
 //save launch object in launches collection, update values if a launch already exists
 async function saveLaunch(launch) {
@@ -52,7 +57,7 @@ async function saveLaunch(launch) {
   }, launch, { //if launch does not exist, insert launch object
     upsert: true,
   })
-};
+}
 
 //set launches in thelaunches map
 function addNewLaunch(launch) {
@@ -67,7 +72,7 @@ function addNewLaunch(launch) {
       flightNumber: latestFlightNumber,
     })
     ); 
-};
+}
 
 function abortLaunchById(launchId) {
   const aborted = launches.get(launchId); //get data
