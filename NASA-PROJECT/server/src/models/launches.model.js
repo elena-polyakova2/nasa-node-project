@@ -23,8 +23,10 @@ const launch = {
 //add launches by key, value
 saveLaunch(launch);
 
-function existsLaunchWithId(launchId) {
-  return launches.has(launchId);
+async function existsLaunchWithId(launchId) {
+  return await launchesDatabase.findOne({
+    flightNumber: launchId,
+  });
 }
 
 async function getLatestFlightNumber() {
@@ -58,8 +60,8 @@ async function saveLaunch(launch) {
     throw new Error('No matching planet was found.');
   };
 
-  //update one at a time
-  await launchesDatabase.updateOne({
+  //update one at a time, return only properties that were set in update
+  await launchesDatabase.findOneAndUpdate({
     flightNumber: launch.flightNumber, //check if flightNumber already exists, if not, create it, overwise insert launch object
   }, launch, { //if launch does not exist, insert launch object
     upsert: true,
@@ -79,11 +81,19 @@ async function scheduleNewLaunch(launch) {
   await saveLaunch(newLaunch);
 }
 
-function abortLaunchById(launchId) {
-  const aborted = launches.get(launchId); //get data
-  aborted.upcoming = false; //data will be send to history list
-  aborted.success = false;
-  return aborted;
+async function abortLaunchById(launchId) {
+  const aborted = await launchesDatabase.updateOne({
+    flightNumber: launchId,
+  }, { //properties to be updated
+    upcoming: false,
+    success: false,
+  });
+
+  return aborted.modifiedCount === 1;//amount of documents to be update equals to 1
+  // const aborted = launches.get(launchId); //get data
+  // aborted.upcoming = false; //data will be send to history list
+  // aborted.success = false;
+  // return aborted;
 }
 
 module.exports = {
