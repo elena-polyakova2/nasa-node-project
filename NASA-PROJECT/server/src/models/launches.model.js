@@ -89,7 +89,7 @@ async function abortLaunchById(launchId) {
     success: false,
   });
 
-  return aborted.modifiedCount === 1;//amount of documents to be update equals to 1
+  return aborted.modifiedCount === 1; //amount of documents to be update equals to 1
   // const aborted = launches.get(launchId); //get data
   // aborted.upcoming = false; //data will be send to history list
   // aborted.success = false;
