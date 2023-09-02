@@ -5,9 +5,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-//import
-const planetsRouter = require('./routes/planets/planets.router');
-const launchesRouter = require('./routes/launches/launches.router');
+const api = require('./routes/api');
 
 const app = express();
 
@@ -21,14 +19,11 @@ app.use(morgan('combined'));
 //express middleware
 app.use(express.json());//check coming data for json content  
 app.use(express.static(path.join(__dirname, '..', 'public'))); //get path to public files
-
-//api requests
-app.use('/planets', planetsRouter);
-app.use('/launches', launchesRouter);
+app.use('/v1', api); //add version of the api
 
 app.get('/*', (req, res) => {
   //send index.html inresponse
   res.sendFile(path.join(__dirname, '..', 'public', 'index.html'));
-})
+});
 
 module.exports = app;
