@@ -6,6 +6,7 @@ const { mongoConnect } = require('./services/mongo');
 const app = require('./app');
 
 const { loadPlanetsData } = require('./models/planets.model');
+const { loadLaunchData } = require('./models/launches.model');
 
 // app.listen();
 
@@ -22,6 +23,7 @@ async function startServer() {
   //connect to the MongoDB using latest features
   await mongoConnect();
   await loadPlanetsData();
+  await loadLaunchData(); //data from SpaceX
 
   server.listen(PORT, () => {
     console.log(`Listening on port ${PORT} ...`);

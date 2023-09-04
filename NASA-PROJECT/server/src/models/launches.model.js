@@ -1,5 +1,7 @@
 //model works with data based on however that stored
 
+const axios = require('axios');
+
 const launchesDatabase = require('./launches.mongo');
 const planets = require('./planets.mongo');
 
@@ -10,18 +12,45 @@ const launches = new Map();
 
 //store launch in object
 const launch = {
-  flightNumber: 100,
-  mission: 'Kepler Exploration X',
-  rocket: 'Explorer IS1',
-  launchDate: new Date('December 27, 2030'), //javascript date object
-  target: 'Kepler-442 b',
-  customers: ['ZTM', 'NASA'],
-  upcoming: true,
-  success: true,
+  flightNumber: 100, //flight_number
+  mission: 'Kepler Exploration X', //name
+  rocket: 'Explorer IS1', //rocket.name in api request
+  launchDate: new Date('December 27, 2030'), //javascript date object, date_local in api request
+  target: 'Kepler-442 b', //not applicable
+  customers: ['ZTM', 'NASA'], //payload.customers for each payload
+  upcoming: true, //upcoming
+  success: true, //success
 };
 
 //add launches by key, value
 saveLaunch(launch);
+
+const SPACEX_API_URL = 'https://api.spacexdata.com/v4/launches/query';
+async function loadLaunchesData() {
+  console.log('Downloading the launch data');
+
+  //post request using axios
+  const response = await axios.post(SPACEX_API_URL, {
+    
+    query: {},
+    options: {
+      populate: [
+        {
+          path: 'rocket',
+          select: { //value to select
+              name: 1
+          }
+        },
+        {
+          path: 'payloads',
+          select: {
+            customers: 1
+          }
+        }
+      ]
+    } 
+  });
+}
 
 async function existsLaunchWithId(launchId) {
   return await launchesDatabase.findOne({
@@ -97,6 +126,7 @@ async function abortLaunchById(launchId) {
 }
 
 module.exports = {
+  loadLaunchesData,
   existsLaunchWithId,
   getAllLaunches,
   scheduleNewLaunch,
