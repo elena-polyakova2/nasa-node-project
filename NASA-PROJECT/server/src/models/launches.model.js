@@ -34,6 +34,7 @@ async function loadLaunchData() {
     
     query: {},
     options: {
+      pagination: false, //get all SpaceX launches on one page with one request
       populate: [
         {
           path: 'rocket',
