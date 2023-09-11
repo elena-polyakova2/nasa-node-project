@@ -125,11 +125,11 @@ async function getLatestFlightNumber() {
   return latestLaunch.flightNumber;
 }
 
-async function getAllLaunches() {
+async function getAllLaunches(skip, limit) {
   return await launchesDatabase
-  .find({}, {
-    '_id': 0, '__v': 0,
-  }); //find all launches in mongo collection and display them excluding mongoose's id and version key
+  .find({}, { '_id': 0, '__v': 0 }) //find all launches in mongo collection and display them excluding mongoose's id and version key
+  .skip(skip) //skip over first 20 documents
+  .limit(limit); //limit documents to come back from mongo
 }
 
 //save launch object in launches collection, update values if a launch already exists

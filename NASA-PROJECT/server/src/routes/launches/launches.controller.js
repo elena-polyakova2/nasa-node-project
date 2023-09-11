@@ -7,9 +7,15 @@ const {
   abortLaunchById,
 } = require('../../models/launches.model');
 
+const {
+  getPagination,
+} = require('../../services/query');
+
 async function httpGetAllLaunches(req, res) {
+  const { skip, limit } = getPagination(req.query);  
+  const launches = await getAllLaunches(skip, limit);   
   //return status code 200 and json to correspond to the launches map that in the form of array
-  return res.status(200).json(await getAllLaunches()); 
+  return res.status(200).json(launches); 
 };
 
 async function httpAddNewLaunch(req, res) {
