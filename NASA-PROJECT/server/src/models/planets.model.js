@@ -47,7 +47,7 @@ async function getAllPlanets() {
     '_id': 0, 
     '__v': 0,
   });
-};
+}
 
 async function savePlanet(planet) {
   //insert + update = upsert (insert only when project doesn't exist in the database)
@@ -62,10 +62,9 @@ async function savePlanet(planet) {
   } catch(err) {
     console.error(`Could not save planet, ${err}`);
   }
-};
+}
 
 module.exports = {
   loadPlanetsData,
   getAllPlanets,
-  savePlanet,
-}     
+};    

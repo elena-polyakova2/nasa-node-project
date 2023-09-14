@@ -37,7 +37,7 @@ async function populateLaunches() {
     } 
   });
 
-  //validate response tatus code
+  //validate response status code
   if(response.status !== 200) {
     console.log('There is a problem in downloading the data.');
     throw new Error('Launch data download failed.');
@@ -125,7 +125,7 @@ async function saveLaunch(launch) {
     flightNumber: launch.flightNumber, //check if flightNumber already exists, if not, create it, overwise insert launch object
   }, launch, { //if launch does not exist, insert launch object
     upsert: true,
-  })
+  });
 }
 
 async function scheduleNewLaunch(launch) {
@@ -172,5 +172,4 @@ module.exports = {
   getAllLaunches,
   scheduleNewLaunch,
   abortLaunchById,
-  saveLaunch,
-}
+};

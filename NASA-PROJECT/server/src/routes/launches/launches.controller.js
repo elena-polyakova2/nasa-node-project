@@ -30,7 +30,7 @@ async function httpAddNewLaunch(req, res) {
 
   launch.launchDate = new Date(launch.launchDate);
   
-  //if launch.launchDate can't be converted to valid date
+  //if launch.launch can't be converted to valid date
   if (isNaN(launch.launchDate)) { //check if launch.launchDate is a number
     return res.status(400).json({
       error: 'Invalid launch date',
@@ -39,7 +39,7 @@ async function httpAddNewLaunch(req, res) {
 
   await scheduleNewLaunch(launch); //call addNewLaunch passing in new launch data
   return res.status(201).json(launch);
-};
+}
 
 async function httpAbortLaunch(req, res) {
   const launchId = Number(req.params.id); //get id parameter
