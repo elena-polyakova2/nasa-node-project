@@ -8,8 +8,6 @@ const app = require('./app');
 const { loadPlanetsData } = require('./models/planets.model');
 const { loadLaunchData } = require('./models/launches.model');
 
-// app.listen();
-
 /*
 - Set port different to the port that the front-end runs on;
 - Make it environmental variable;
