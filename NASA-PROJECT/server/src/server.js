@@ -2,6 +2,9 @@
 const http = require('http');
 const { mongoConnect } = require('./services/mongo');
 
+//populate values in the environment file
+require('dotenv').config();
+
 //import app 
 const app = require('./app');
 
