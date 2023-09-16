@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+//populate values in the environment file
+require('dotenv').config();
+
 //mongoDB connection string
 const MONGO_URL = process.env.MONGO_URL;
 

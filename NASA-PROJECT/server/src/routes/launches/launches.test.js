@@ -4,7 +4,7 @@ const app = require('../../app');
 
 const { 
   mongoConnect, 
-  mongoDisconnent, 
+  mongoDisconnect, 
 } = require('../../services/mongo');
 
 describe('Launches API', () => {
@@ -13,7 +13,7 @@ describe('Launches API', () => {
   });
 
   afterAll(async () => {
-    await mongoDisconnent();
+    await mongoDisconnect();
   });
 
   describe('Test GET /launches', () => {
