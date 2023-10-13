@@ -5,7 +5,7 @@ name: NASA Project CI
 on:
   push:
     branches: [main]
-    pull_request:
+  pull_request:
       branches: [main]
 # Jobs to run when the events triggered:
 jobs:
@@ -20,3 +20,6 @@ jobs:
           node-version: "18"
       - run: npm install
       - run: npm run build --prefix client
+      
+
+          
