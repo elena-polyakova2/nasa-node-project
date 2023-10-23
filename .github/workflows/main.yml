@@ -10,15 +10,21 @@ on:
 # Jobs to run when the events triggered:
 jobs:
   build:
+    env: 
+      CI: true
+    strategy:
+      matrix: 
+        node-version: [14.x, 16.x]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       # make sure node is installed on the machine runnning the build
-      - name: Use Node.js version 18
+      - name: Use Node.js version ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: ${{ matrix.node-version }}
       - run: npm install
         working-directory: ./NASA-PROJECT/client
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
+      - run: npm test
