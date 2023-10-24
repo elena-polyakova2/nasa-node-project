@@ -35,10 +35,12 @@ jobs:
         working-directory: ./NASA-PROJECT/client
       - name: Install Dependencies and Run Tests
         run: |
-          cd ./NASA-PROJECT/server   # Change to your server directory
-          npm install             # Install server dependencies
-          npm test                # Run tests using Jest
+          cd ./NASA-PROJECT   # Change to your project directory
+          cd server            # Change to your server directory
+          npm install          # Install server dependencies
+          npm test             # Run tests using Jest
         working-directory: ./NASA-PROJECT
+
 
       # - run: npm test
       #   working-directory: ./NASA-PROJECT/server
