@@ -34,4 +34,5 @@ jobs:
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
       - run: npm test
+        working-directory: ./NASA-PROJECT/server
         
