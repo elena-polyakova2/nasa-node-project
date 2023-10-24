@@ -33,11 +33,8 @@ jobs:
         working-directory: ./NASA-PROJECT/client
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
-      - run: npm test
+      - run: |
+          npm install --save-dev jest
+          npm test
         working-directory: ./NASA-PROJECT/server
-
-      # - run: |
-      #     npm install jest
-      #     npm test
-      #   working-directory: ./NASA-PROJECT/server
         
