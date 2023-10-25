@@ -33,6 +33,8 @@ jobs:
         working-directory: ./NASA-PROJECT/client
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
+      - name: List files in server directory (before cleanup)
+        run: ls -al ./NASA-PROJECT/server
       - name: Cleanup and Reinstall Server Dependencies
         run: |
           rm -rf ./NASA-PROJECT/server/node_modules
