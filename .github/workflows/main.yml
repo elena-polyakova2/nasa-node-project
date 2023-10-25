@@ -36,13 +36,16 @@ jobs:
       - name: Cleanup and Reinstall Server Dependencies
         run: |
           rm -rf ./NASA-PROJECT/server/node_modules
-          rm ./NASA-PROJECT/server/package-lock.json
+          rm ./NASA-PROJECT/server/package-lock.json || true
           cd ./NASA-PROJECT/server
           npm cache clean --force
           npm install
         working-directory: ./NASA-PROJECT/server
+
+      - name: List files in server directory 
+        run: ls -al ./NASA-PROJECT/server
+
       - run: npm test
         working-directory: ./NASA-PROJECT/server
-
  
         
