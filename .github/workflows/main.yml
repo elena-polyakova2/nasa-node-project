@@ -33,8 +33,16 @@ jobs:
         working-directory: ./NASA-PROJECT/client
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
-      - run: |
-          npm install --save-dev jest
-          npm test
+      - name: Cleanup and Reinstall Server Dependencies
+        run: |
+          rm -rf ./NASA-PROJECT/server/node_modules
+          rm ./NASA-PROJECT/server/package-lock.json
+          cd ./NASA-PROJECT/server
+          npm cache clean --force
+          npm install
         working-directory: ./NASA-PROJECT/server
+      - run: npm test
+        working-directory: ./NASA-PROJECT/server
+
+ 
         
