@@ -43,10 +43,8 @@ jobs:
           npm cache clean --force
           npm install
         working-directory: ./NASA-PROJECT/server
-
       - name: List files in server directory 
         run: ls -al ./NASA-PROJECT/server
-
       - run: npm test
         working-directory: ./NASA-PROJECT/server
  
