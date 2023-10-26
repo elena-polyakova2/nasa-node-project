@@ -10,15 +10,46 @@ on:
 # Jobs to run when the events triggered:
 jobs:
   build:
+    env: 
+      CI: true
+      MONGO-URL: mongodb//localhost/nasa
+    strategy:
+      matrix: 
+        node-version: [16.x, 18.x]
+        mongodb-version: ['4.4']
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       # make sure node is installed on the machine runnning the build
-      - name: Use Node.js version 18
+      - name: Use Node.js version ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: ${{ matrix.node-version }}
+      - name: Use MongoDB from GitHub Actions
+        uses: supercharge/mongodb-github-action@v1.10.0
+        with: 
+          mongodb-version: ${{ matrix.mongodb-version }}
       - run: npm install
         working-directory: ./NASA-PROJECT/client
       - run: npm run build
         working-directory: ./NASA-PROJECT/client
+      - name: Print Current Working Directory
+        run: |
+          pwd
+        working-directory: ./NASA-PROJECT/server
+      - name: Clean and Install Server Dependencies
+        run: |
+          rm -rf node_modules
+          npm cache clean --force
+          npm install
+        working-directory: ./NASA-PROJECT/server
+
+      - name: List files in server directory 
+        run: ls -al ./NASA-PROJECT/server
+      - run: |
+          npm install morgan --save
+          npm i mongoose --save
+          npm test
+        working-directory: ./NASA-PROJECT/server
+ 
+        
