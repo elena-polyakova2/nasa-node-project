@@ -46,7 +46,9 @@ jobs:
 
       - name: List files in server directory 
         run: ls -al ./NASA-PROJECT/server
-      - run: npm test
+      - run: |
+          npm install morgan --save
+          npm test
         working-directory: ./NASA-PROJECT/server
  
         
