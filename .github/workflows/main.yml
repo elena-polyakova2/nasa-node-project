@@ -50,6 +50,8 @@ jobs:
           npm install morgan --save
           npm i mongoose --save
           npm test
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL }}
         working-directory: ./NASA-PROJECT/server
  
         
