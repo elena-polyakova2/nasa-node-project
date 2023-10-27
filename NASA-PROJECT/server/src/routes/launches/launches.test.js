@@ -6,10 +6,12 @@ const {
   mongoConnect, 
   mongoDisconnect, 
 } = require('../../services/mongo');
+const { loadPlanetsData } = require('../../models/planets.model');
 
 describe('Launches API', () => {
   beforeAll(async () => {
     await mongoConnect(); //connect to the database
+    await loadPlanetsData();
   });
 
   afterAll(async () => {
